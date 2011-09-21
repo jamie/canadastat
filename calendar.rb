@@ -2,17 +2,68 @@ $LOAD_PATH << 'lib'
 require 'holidays'
 
 require 'icalendar'
+require 'sinatra'
 
-cal = Icalendar::Calendar.new
-
-Holiday.all(2011, ARGV[0] || Holiday.provinces).each do |holiday|
-  cal.event do
-    dtstart holiday.date
-    dtend   holiday.date
-    summary holiday.name
-  end
+get '/' do
+  erb :index 
 end
-cal.publish
 
-require 'pp'
-puts cal.to_ical
+get '/:province.ics' do
+  cal = Icalendar::Calendar.new
+
+  6.times do |i|
+    Holiday.all(Date.today.year + i, params[:province] || Holiday.provinces).each do |holiday|
+      cal.event do
+        dtstart holiday.date
+        dtend   holiday.date
+        summary holiday.name
+      end
+    end
+  end
+  cal.publish
+
+  content_type 'text/calendar'
+  cal.to_ical
+end
+
+__END__
+
+@@ index
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Provincial Stat Holidays</title>
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+</head>
+<body>
+  <div class="content">
+    <div class="row">
+      <div class="span2">&nbsp;</div>
+      <div class="span8">
+        <h3>Canadian Provincial Statutory Holidays</h3>
+        <p>In iCal format! Subscribe in your calendar reader for the current year and next 5 years, automatically updating.</p>
+        <ul>
+          <li><a href="/BC.ics">British Columbia</a></li>
+          <li><a href="/AB.ics">Alberta</a></li>
+          <li><a href="/SK.ics">Saskatchewan</a></li>
+          <li><a href="/MB.ics">Manitoba</a></li>
+          <li><a href="/ON.ics">Ontario</a></li>
+          <li><a href="/QC.ics">Quebec</a></li>
+          <li><a href="/NB.ics">New Brunswick</a></li>
+          <li><a href="/NS.ics">Nova Scotia</a></li>
+          <li><a href="/PE.ics">Prince Edward Island</a></li>
+          <li><a href="/NL.ics">Newfoundland</a></li>
+          <li><a href="/YT.ics">Youkon Territory</a></li>
+          <li><a href="/NT.ics">Northwest Territories</a></li>
+          <li><a href="/NU.ics">Nunavut</a></li>
+        </ul>
+
+        <p>Originally sourced from <a href="http://www.statutoryholidays.com/">Statutory Holidays Canada</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

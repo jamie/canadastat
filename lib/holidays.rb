@@ -42,7 +42,7 @@ class Holiday
 
     @holidays.select{ |day|
       !(day.provinces & target_provinces).empty?
-    }.map{ |holiday|
+    }.uniq.map{ |holiday|
       holiday.new(year)
     }
   end
