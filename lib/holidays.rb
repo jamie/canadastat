@@ -36,7 +36,6 @@ class Date
   end
 end
 
-
 class Holiday
   def self.all(year, province=provinces)
     target_provinces = Array(province)
