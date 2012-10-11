@@ -88,7 +88,7 @@ class Holiday
   end
   
   def self.relative_date(sequence, weekday, month)
-    d = Date.new(@year, month, 1) + (7 * sequence)
+    d = Date.new(@year, month, 1) + (7 * (sequence-1))
     d += weekday - d.wday
     d
   end
