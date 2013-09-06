@@ -89,6 +89,7 @@ class Holiday
   
   def self.relative_date(sequence, weekday, month)
     d = Date.new(@year, month, 1) + (7 * (sequence-1))
+    d += 7 if weekday < d.wday
     d += weekday - d.wday
     d
   end
@@ -113,6 +114,12 @@ class FamilyDay < Holiday
   name "Family Day"
   date { relative_date(3, 1, 2) } # feb, 3rd, monday
   provinces %w(AB SK ON)
+end
+
+class BCFamilyDay < Holiday
+  name "Family Day"
+  date { relative_date(2, 1, 2) } # feb, 2nd, monday
+  provinces %w(BC)
 end
 
 class LouisRielDay < Holiday
