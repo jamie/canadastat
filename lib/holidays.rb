@@ -111,8 +111,8 @@ end
 
 class FamilyDay < Holiday
   name "Family Day"
-  date { relative_date(3, 1, 2) } # feb, 3rd, monday
-  provinces %w(AB SK ON)
+  date { relative_date(3, 1, 2) } # 3rd Monday in Feb
+  provinces %w(AB BC SK ON)
 end
 
 class LouisRielDay < Holiday
@@ -196,5 +196,3 @@ class BoxingDay < Holiday
   date { Date.new(@year, 12, 26) }
   provinces %w(ON)
 end
-
-
