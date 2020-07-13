@@ -13,10 +13,10 @@ get '/:province.ics' do
 
   6.times do |i|
     Holiday.all(Date.today.year + i, params[:province] || Holiday.provinces).each do |holiday|
-      cal.event do
-        dtstart holiday.date
-        dtend   holiday.date
-        summary holiday.name
+      cal.event do |e|
+        e.dtstart = Icalendar::Values::Date.new(holiday.date)
+        e.dtend   = Icalendar::Values::Date.new(holiday.date)
+        e.summary = holiday.name
       end
     end
   end
