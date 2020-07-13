@@ -1,28 +1,28 @@
-$LOAD_PATH << 'lib'
-require 'holidays'
+$LOAD_PATH << "lib"
+require "holidays"
 
-require 'icalendar'
-require 'sinatra'
+require "icalendar"
+require "sinatra"
 
-get '/' do
-  erb :index 
+get "/" do
+  erb :index
 end
 
-get '/:province.ics' do
+get "/:province.ics" do
   cal = Icalendar::Calendar.new
 
   6.times do |i|
     Holiday.all(Date.today.year + i, params[:province] || Holiday.provinces).each do |holiday|
       cal.event do |e|
         e.dtstart = Icalendar::Values::Date.new(holiday.date)
-        e.dtend   = Icalendar::Values::Date.new(holiday.date)
+        e.dtend = Icalendar::Values::Date.new(holiday.date)
         e.summary = holiday.name
       end
     end
   end
   cal.publish
 
-  content_type 'text/calendar'
+  content_type "text/calendar"
   cal.to_ical
 end
 
