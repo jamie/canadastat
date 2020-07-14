@@ -89,6 +89,7 @@ class Holiday
 
   def self.relative_date(sequence, weekday, month)
     d = Date.new(@year, month, 1) + (7 * (sequence - 1))
+    d += 7 if weekday < d.wday
     d += weekday - d.wday
     d
   end
@@ -136,11 +137,11 @@ end
 class VictoriaDay < Holiday
   name "Victoria Day"
   # Monday *preceeding* May 25.
-  date {
+  date do
     d = Date.new(@year, 5, 24)
     d += 1 - d.wday
     d
-  }
+  end
   provinces(provinces - %w[NB NS PE NL])
 end
 
@@ -163,24 +164,24 @@ end
 
 class CivicHoliday < Holiday
   name "Civic Holiday"
-  date { relative_date(1, 1, 8) }
+  date { relative_date(1, 1, 8) } # 1st Monday in Aug
   provinces %w[BC SK MB NB NU]
 end
 
 class DiscoveryDay < Holiday
   name "Discovery Day"
-  date { relative_date(3, 1, 8) }
+  date { relative_date(3, 1, 8) } # 1st Monday in Aug
   provinces %w[YT]
 end
 
 class LabourDay < Holiday
   name "Labour Day"
-  date { relative_date(1, 1, 9) }
+  date { relative_date(1, 1, 9) } # 1st Monday in Sep
 end
 
 class Thanksgiving < Holiday
   name "Thanksgiving"
-  date { relative_date(2, 1, 10) }
+  date { relative_date(2, 1, 10) } # 2nd Monday in Oct
   provinces(provinces - %w[NB NS PE NL])
 end
 
