@@ -1,7 +1,8 @@
 $LOAD_PATH << "lib"
+require "active_support"
 require "holidays"
-
 require "icalendar"
+
 require "sinatra"
 
 get "/" do
@@ -11,13 +12,11 @@ end
 get "/:province.ics" do
   cal = Icalendar::Calendar.new
 
-  6.times do |i|
-    Holiday.all(Date.today.year + i, params[:province] || Holiday.provinces).each do |holiday|
-      cal.event do |e|
-        e.dtstart = Icalendar::Values::Date.new(holiday.date)
-        e.dtend = Icalendar::Values::Date.new(holiday.date)
-        e.summary = holiday.name
-      end
+  Holidays.between(8.months.ago, 66.months.from_now, :"ca_#{params[:province].downcase}").each do |holiday|
+    cal.event do |e|
+      e.dtstart = Icalendar::Values::Date.new(holiday[:date])
+      e.dtend = Icalendar::Values::Date.new(holiday[:date])
+      e.summary = holiday[:name]
     end
   end
   cal.publish
@@ -60,7 +59,7 @@ __END__
           <li><a href="/NU.ics">Nunavut</a></li>
         </ul>
 
-        <p>Originally sourced from <a href="http://www.statutoryholidays.com/">Statutory Holidays Canada</a></p>
+        <p>Data via Ruby <a href="https://github.com/holidays/holidays/">Holidays gem</a></p>
       </div>
     </div>
   </div>
