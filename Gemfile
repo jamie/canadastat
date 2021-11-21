@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "2.7.4"
+ruby "2.7"
 
 # Hello! This is where you manage which Bridgetown version is used to run.
 # When you want to use a different version, change it below, save the
