@@ -1,0 +1,28 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Provincial Stat Holidays</title>
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+</head>
+<body>
+  <div class="content">
+    <div class="row">
+      <div class="span2">&nbsp;</div>
+      <div class="span8">
+        <h3>Canadian Provincial Statutory Holidays</h3>
+        <p>In iCal format! Subscribe in your calendar reader for the current year and next 5 years, automatically updating.</p>
+        <ul>
+          {% for region in site.data.regions %}
+          <li><a href="/{{region.code}}.ics">{{region.name}}</a></li>
+          {% endfor %}
+        </ul>
+
+        <p>Data via Ruby <a href="https://github.com/holidays/holidays/">Holidays gem</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
