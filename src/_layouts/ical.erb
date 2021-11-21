@@ -1,0 +1,18 @@
+---
+---
+<%=
+require 'icalendar'
+require 'holidays'
+
+cal = Icalendar::Calendar.new
+
+Holidays.between(8.months.ago, 66.months.from_now, :"#{page.data.slug}").each do |holiday|
+  cal.event do |e|
+    e.dtstart = Icalendar::Values::Date.new(holiday[:date])
+    e.dtend = Icalendar::Values::Date.new(holiday[:date])
+    e.summary = holiday[:name]
+  end
+end
+cal.publish
+cal.to_ical
+%>
