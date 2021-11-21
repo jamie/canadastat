@@ -3,6 +3,7 @@
 <%=
 require 'icalendar'
 require 'holidays'
+require 'cgi'
 
 cal = Icalendar::Calendar.new
 
@@ -10,7 +11,7 @@ Holidays.between(8.months.ago, 66.months.from_now, :"#{page.data.slug}").each do
   cal.event do |e|
     e.dtstart = Icalendar::Values::Date.new(holiday[:date])
     e.dtend = Icalendar::Values::Date.new(holiday[:date])
-    e.summary = holiday[:name]
+    e.summary = CGI.unescapeHTML(holiday[:name])
   end
 end
 cal.publish
