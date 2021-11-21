@@ -16,7 +16,7 @@
         <p>In iCal format! Subscribe in your calendar reader for the current year and next 5 years, automatically updating.</p>
         <ul>
           {% for region in site.data.regions %}
-          <li><a href="/{{region.code}}.ics">{{region.name}}</a></li>
+          <li><a href="/{{region.slug}}.ics">{{region.name}}</a></li>
           {% endfor %}
         </ul>
 
