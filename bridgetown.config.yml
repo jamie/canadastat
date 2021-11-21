@@ -24,3 +24,7 @@ permalink: pretty
 # timezone: America/Los_Angeles
 pagination:
   enabled: true
+
+collections:
+  regions:
+    output: true

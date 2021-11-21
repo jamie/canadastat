@@ -1,9 +1,11 @@
 ---
+pagination:
+  collection: regions
+permalink: /proto/:prototype-term.ics
 prototype:
   term: region
   data: regions
   collection: regions
-permalink: /:term.ics
 ---
 <%=
 cal = Icalendar::Calendar.new
